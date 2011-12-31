@@ -370,9 +370,9 @@ endif
 
 # Adding override for mega since boards.txt uses stk500 instead of
 # arduino on 22 release
-ifeq ($(BOARD),mega)
-  UPLOAD_PROTOCOL	:=	arduino
-endif
+#ifeq ($(BOARD),mega)
+  #UPLOAD_PROTOCOL	:=	arduino
+#endif
 
 ifeq ($(MCU),)
 $(error ERROR: Could not locate board $(BOARD) in $(BOARDFILE))
@@ -424,7 +424,7 @@ all:	$(SKETCHELF) $(SKETCHEEP) $(SKETCHHEX)
 
 .PHONY: upload
 upload: $(SKETCHHEX)
-	$(AVRDUDE) -c $(UPLOAD_PROTOCOL) -p $(MCU) -P $(PORT) -b$(UPLOAD_SPEED) -U flash:w:$(SKETCHHEX):i
+	$(AVRDUDE) -C$(ARDUINO)/hardware/tools/avr/etc/avrdude.conf -v -c$(UPLOAD_PROTOCOL) -p$(MCU) -P$(PORT) -b$(UPLOAD_SPEED) -D -Uflash:w:$(SKETCHHEX):i 
 
 configure:
 	$(warning WARNING - A $(SKETCHBOOK)/config.mk file has been written)
